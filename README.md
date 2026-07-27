@@ -51,6 +51,8 @@ tymetro-quick/
 ├── app.js                  # 前端互動邏輯、發車倒數與 PWA 註冊
 ├── manifest.webmanifest    # PWA 安裝與圖標設定檔
 ├── service-worker.js       # PWA 離線 Cache 控制器
+├── robots.txt              # 搜尋引擎爬蟲設定檔
+├── sitemap.xml             # 網站導覽 Sitemap 檔
 ├── run_server.bat          # Windows 一鍵啟動本機伺服器腳本
 ├── README.md               # 專案說明文件 (本文件)
 ├── STATUS.md               # 專案進度與開發狀態
