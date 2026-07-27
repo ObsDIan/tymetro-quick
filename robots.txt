@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# Sitemap URL (請在提交 Google Search Console 時換成您的真實網籤/GitHub Pages 網址)
-Sitemap:https://obsdian.github.io/tymetro-quick/
+# Sitemap URL
+Sitemap: https://obsdian.github.io/tymetro-quick/sitemap.xml
