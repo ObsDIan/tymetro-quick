@@ -1,179 +1,140 @@
-# 機捷快選
+# 🚆 機捷快選 (Taoyuan Airport MRT Quick Router)
 
-手機上快速判斷桃園機場捷運「全程普通車、全程直達/跳站車、普通轉直達、直達轉普通」哪個最快的靜態 PWA。
+**手機上快速判斷桃園機場捷運「普通車先來要不要搭？」、「直達車何時轉乘最快」的極速 PWA 工具。**
 
-> 這一版已使用你上傳的 `StationTimeTable.xml` 轉成 `data/stations.csv` 與 `data/timetable.csv`。  
-> 但該 XML 內的來源更新時間為 `2018-05-15T00:00:00+08:00`，只包含 A1～A21 與 A14a，沒有 A22 / A23。正式通勤前請確認這份 XML 是否就是你要發布的最新資料。
+> 📱 支援手機 RWD 響應式排版、離線 PWA 加入主畫面、SEO 搜尋引擎最佳化與全線 A1 ~ A22 站點票價與時刻精算。
 
-## 專案特色
+---
 
-- 純靜態：HTML / CSS / JavaScript，不需要後端。
-- 可直接上 GitHub Pages。
-- 手機 RWD，並支援加入主畫面。
-- 前端只讀 CSV，負載小。
-- 支援最多一次轉乘：
-  - 全程普通車
-  - 全程直達/跳站車
-  - 普通車 → 直達/跳站車
-  - 直達/跳站車 → 普通車
-- 資料檔採 network-first 快取：平常會抓最新版，離線時可用快取。
-- 內附 XML 轉 CSV 工具，可重新匯入官方資料。
+## 🌟 核心特色
 
-## 專案文件導覽
+- ⚡ **極速零後端**：純前端原生 HTML5 / Vanilla CSS / ES Modules，載入毫秒級完成。
+- 🔍 **SEO 搜尋引擎優化**：完整配置 Schema.org JSON-LD 結構化資料、Open Graph 社群卡片、Semantic HTML 語意標籤與搭乘指南。
+- 🚆 **專用車種簡化**：明確歸納桃捷兩種車種 —— **普通車** 與 **直達車**。
+- 🔄 **智慧轉乘決策**：自動比對「直達車」、「普通車」與「轉乘組合（普通車 ↔ 直達車）」，提供秒懂的搭乘建議（例如：A8 長庚醫院站同月台轉乘）。
+- 💰 **票價與發車倒數**：標示單程全票金額（NT$ 30 ~ 160）與班車進站/發車剩餘分鐘數。
+- 📦 **離線 PWA 雙重備援**：支援 `fetch()` 與內建 `bundle.js` 快取，即使離線或無網路狀態下仍可正常查詢。
+- 🛠️ **自動化工具鏈**：內建官方 XML 轉換器、資料驗證腳本與單元測試套件。
 
-- 📊 **[STATUS.md](STATUS.md)**：專案進度、完成功能清單與目錄結構。
-- 🔄 **[DATA_UPDATE.md](DATA_UPDATE.md)**：桃園捷運最新 XML 班表轉換與資料更新操作指南。
-- 🤖 **[AI_HANDOVER.md](AI_HANDOVER.md)**：AI Agent 接手開發、維護規範與測試指令。
+---
 
+## 🚆 車種說明 (Train Types)
 
-## 目錄
+桃園機場捷運列車車種僅有以下 **兩種**：
 
+1. **普通車 (Local Train)**：
+   - 每站皆停靠（A1 台北車站 ↔ A22 老街溪站）。
+   - 全線 22 個車站均有停靠，適合區域通勤與非大站乘客。
+2. **直達車 (Express Train)**：
+   - 僅停靠主要樞紐大站（如 A1 台北車站、A3 新北產業園區、A8 長庚醫院、A12 第一航廈、A13 第二航廈、A18 高鐵桃園站、A21 環北站）。
+   - 提供快速穿梭台北市區、桃園機場與高鐵桃園站之乘車選擇。
 
-```text
-index.html
-styles.css
-app.js
-manifest.webmanifest
-service-worker.js
-src/
-  csv.js
-  router.js
-data/
-  stations.csv
-  timetable.csv
-  version.json
-tools/
-  convert_tymetro_xml.py
-  validate_data.py
-tests/
-  router.test.mjs
-```
+---
 
-## 部署到 GitHub Pages
+## 🎯 最快路線規劃類型
 
-1. 建立 GitHub Repository。
-2. 把本專案所有檔案推上去。
-3. 到 Repository Settings → Pages。
-4. Source 選 `Deploy from a branch`。
-5. Branch 選 `main`，Folder 選 `/root`。
-6. 發布後用手機開 Pages 網址，瀏覽器選「加入主畫面」。
+系統在毫秒間試算並為您提供最多一次轉乘的最佳方案：
 
-## 班表資料更新流程
+1. **全程普通車**
+2. **全程直達車**
+3. **普通車 → 直達車**（先搭普通車，於 A8 長庚醫院等站換乘直達車）
+4. **直達車 → 普通車**（先搭直達車至核心大站，再換乘普通車前往目標站）
 
-### 1. 放入官方 XML
+---
 
-把 `StationTimeTable.xml` 放到專案內，例如：
+## 📂 專案目錄結構
 
 ```text
-raw/StationTimeTable.xml
+tymetro-quick/
+├── index.html              # 主介面 HTML (含 JSON-LD SEO 結構化資料 & SEO 指南)
+├── styles.css              # 現代 Design System 樣式檔 (HSL 色彩 + 毛玻璃)
+├── app.js                  # 前端互動邏輯、發車倒數與 PWA 註冊
+├── manifest.webmanifest    # PWA 安裝與圖標設定檔
+├── service-worker.js       # PWA 離線 Cache 控制器
+├── run_server.bat          # Windows 一鍵啟動本機伺服器腳本
+├── README.md               # 專案說明文件 (本文件)
+├── STATUS.md               # 專案進度與開發狀態
+├── DATA_UPDATE.md          # 班表資料更新指南
+├── AI_HANDOVER.md          # AI Agent 接手維護與測試規範
+├── src/
+│   ├── csv.js              # CSV 解析器與 fetch/fallback 讀取模組
+│   └── router.js           # 轉乘演算法、路徑規劃引擎與票價計算器
+├── data/
+│   ├── stations.csv        # 車站清單 (A1~A22)
+│   ├── timetable.csv       # 班表時刻明細 (4,430 筆)
+│   ├── version.json        # 班表版本號
+│   └── bundle.js           # 離線與 file:// 專用資料包
+├── tools/
+│   ├── convert_tymetro_xml.py  # 官方 XML 轉 CSV 重構工具
+│   ├── validate_data.py        # 資料結構與 Integrity 驗證工具
+│   ├── build_bundle.py         # 靜態 bundle.js 打包工具
+│   └── test_router.py          # 單元與整合測試套件
+└── tests/
+    └── router.test.mjs         # JavaScript 測試檔案
 ```
 
-### 2. 轉換成前端使用的 CSV
+---
+
+## 🚀 本機開啟與測試 (Local Development)
+
+### 1. 開啟本機 Web 伺服器
+
+因為瀏覽器安全性規範（ES Modules CORS），請勿直接點擊 HTML。請在專案目錄執行：
 
 ```bash
-python tools/convert_tymetro_xml.py raw/StationTimeTable.xml \
+# 使用 Python 啟動本機伺服器
+python -m http.server 8080
+```
+
+或在 Windows 環境下雙擊執行 `run_server.bat`。  
+接著開啟瀏覽器訪問：[http://localhost:8080](http://localhost:8080)
+
+### 2. 執行自動化測試
+
+```bash
+# 驗證 CSV 資料完整度
+python tools/validate_data.py data/stations.csv data/timetable.csv
+
+# 執行 Router 演算法與單元測試
+python tools/test_router.py
+```
+
+---
+
+## 🔄 班表資料更新流程
+
+當官方發布新版時刻表 XML 檔（如 `StationTimeTable.xml`）時，請依以下步驟更新：
+
+```bash
+# 1. 將 XML 轉為 CSV
+python tools/convert_tymetro_xml.py StationTimeTable.xml \
   --stations data/stations.csv \
   --out data/timetable.csv \
   --version data/version.json \
   --data-version StationTimeTable.xml-YYYY-MM-DD
-```
 
-轉換器會處理桃捷站別時刻表的特性：原始 XML 是「站別時刻表」，通常沒有真正的 `TripID` / `TrainNo`。工具會用服務日、方向、目的站、車種與時間順序重建可供前端計算的列車行程，並補上終點站到站時間。
+# 2. 重新打包離線 bundle.js
+python tools/build_bundle.py
 
-### 3. 驗證資料
-
-```bash
+# 3. 驗證資料與測試
 python tools/validate_data.py data/stations.csv data/timetable.csv
+python tools/test_router.py
 ```
 
-成功時應該看到類似：
+更詳細的操作手冊請參閱 **[DATA_UPDATE.md](DATA_UPDATE.md)**。
 
-```text
-Stations: 21
-Timetable rows: 4430
-Train runs: 428
-Services: daily, weekday, weekend
-Directions: north, south
-Train types: express, local
-```
+---
 
-### 4. 跑演算法測試
+## 🌐 部署至 GitHub Pages
 
-```bash
-node tests/router.test.mjs
-```
+1. 將本專案推送到 GitHub Repository 的 `main` 分支。
+2. 進入 Repository 的 **Settings** → **Pages**。
+3. Source 選擇 `Deploy from a branch`。
+4. Branch 選擇 `main` / Folder 選擇 `/ (root)` 並儲存。
+5. 部署完成後即可在手機瀏覽器開啟並點選「新增至主畫面」安裝為桌面 PWA 應用程式。
 
-成功時會看到：
+---
 
-```text
-router tests passed
-```
+## 📄 授權與聲明
 
-### 5. 抽查
-
-正式發布前，請用桃園捷運官方「票價與時刻表查詢」抽查幾組：
-
-- A1 → A13
-- A1 → A18
-- A18 → A1
-- 你的上班路線
-- 你的下班路線
-
-確認出發/抵達時間合理後再發布。
-
-## CSV 格式
-
-### `data/stations.csv`
-
-```csv
-station_id,station_name,seq,is_express_stop
-A1,台北車站,1,true
-A2,三重,2,false
-```
-
-### `data/timetable.csv`
-
-```csv
-service_type,direction,train_id,train_type,station_id,time
-weekday,south,weekday-south-A13-express-001,express,A1,06:00
-weekday,south,weekday-south-A13-express-001,express,A8,06:19
-weekday,south,weekday-south-A13-express-001,express,A12,06:34
-weekday,south,weekday-south-A13-express-001,express,A13,06:37
-```
-
-欄位說明：
-
-- `service_type`：`weekday`、`weekend`、`daily`
-- `direction`：`south` 表示 A1 往機場/環北方向，`north` 表示往 A1 台北車站方向
-- `train_id`：同一班車在不同站使用相同 ID，由轉換工具重建
-- `train_type`：`local` 或 `express`
-- `station_id`：例如 `A1`、`A14a`
-- `time`：`HH:mm`，凌晨跨日可使用 `00:xx`，系統會自動視為營業日後段
-
-## 本機測試
-
-不需要 npm install。
-
-```bash
-node tests/router.test.mjs
-python tools/validate_data.py data/stations.csv data/timetable.csv
-```
-
-或直接開本機靜態伺服器：
-
-```bash
-python -m http.server 8080
-```
-
-然後開：
-
-```text
-http://localhost:8080
-```
-
-## 注意事項
-
-- App 不處理即時誤點、臨時班距調整、事故、公告停駛。
-- 國定假日目前會依日期週末判斷，沒有串政府國定假日 API；遇到國定假日請用假日資料自行確認。
-- 如果桃捷班表或新增站點有變更，重新下載 XML、轉換、驗證、發布即可。
-- 若你提供 API 端點，之後可以再加一支更新腳本，讓資料更新流程從「手動下載 XML」改成「一鍵抓取 API → 轉換 → 驗證」。
+- 本工具僅供乘車規劃參考，實際發車時間、臨時調度、誤點或特殊節假日營運調整，仍以 **桃園大眾捷運股份有限公司** 官方現場公告為準。

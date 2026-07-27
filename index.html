@@ -3,15 +3,80 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#174ea6">
-  <meta name="description" content="桃園機場捷運普通車與直達車最快轉乘判斷工具">
-  <title>機捷快選</title>
+  <meta name="theme-color" content="#4f46e5">
+  <title>機捷快選 | 桃園機場捷運最快轉乘與時刻表查詢 (普通車/直達車)</title>
+  <meta name="description" content="桃園機場捷運（機捷）最快轉乘與時刻表查詢工具！精算台北車站 A1、長庚醫院 A8、一航廈 A12、二航廈 A13、高鐵桃園 A18、老街溪 A22 班車時間，秒知「普通車先來要不要搭？直達車何時轉乘最快」及單程全票票價。">
+  <meta name="keywords" content="機捷, 桃園機場捷運, 機捷時刻表, 機捷轉乘, 機捷直達車, 機捷普通車, 機捷票價, 台北車站到機場捷運, 桃園機場捷運時刻表, A1台北車站, A8長庚醫院, A12一航廈, A13二航廈, A18高鐵桃園站, A22老街溪">
+  <meta name="author" content="機捷快選">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="./">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="./">
+  <meta property="og:site_name" content="機捷快選">
+  <meta property="og:title" content="機捷快選 | 桃園機場捷運最快轉乘與時刻表精算">
+  <meta property="og:description" content="普通車先來要不要上？一秒為您精算桃園機場捷運直達車與普通車最佳搭法、轉乘建議與票價資訊！">
+  <meta property="og:image" content="icons/icon.svg">
+  <meta property="og:locale" content="zh_TW">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="機捷快選 | 桃園機場捷運最快轉乘與時刻表精算">
+  <meta name="twitter:description" content="普通車先來要不要上？一秒為您精算桃園機場捷運直達車與普通車最佳搭法、轉乘建議與票價資訊！">
+  <meta name="twitter:image" content="icons/icon.svg">
+
+  <!-- Fonts & Manifest -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- JSON-LD Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "機捷快選",
+        "alternateName": "桃園機場捷運最快轉乘與時刻表查詢工具",
+        "description": "桃園機場捷運普通車與直達車最快轉乘判斷與時刻表精算工具",
+        "applicationCategory": "TravelApplication",
+        "operatingSystem": "All",
+        "inLanguage": "zh-TW",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "TWD"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "搭桃園機場捷運普通車先來，要不要先上車？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "「機捷快選」會根據您的出發站與目的站，實時比對直達車與普通車時刻表。若先搭普通車並在轉乘站（如 A8 長庚醫院站）換搭後方直達車能更快抵達，系統會為您提供最佳轉乘決策。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "桃園機場捷運有哪些車種？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "桃園機場捷運車種共有兩種：普通車（每站皆停，連結 A1 至 A22 全線）與直達車（僅停靠主要大站，如 A1 台北車站、A3 新北產業園區、A8 長庚醫院、A12 第一航廈、A13 第二航廈、A18 高鐵桃園站、A21 環北站）。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <main class="app-shell">
@@ -84,6 +149,22 @@
     <section id="decision" class="decision hidden" aria-live="polite"></section>
     <section id="results" class="results" aria-live="polite"></section>
 
+    <section class="card seo-info-card" aria-labelledby="seoTitle">
+      <h2 id="seoTitle">🚆 桃園機場捷運（機捷）搭乘指南與車種說明</h2>
+      
+      <h3>1. 機捷車種區分：普通車 vs 直達車</h3>
+      <p>桃園機場捷運列車車種僅分為兩種：</p>
+      <ul>
+        <li><strong>普通車 (Local)</strong>：每站皆停靠（A1 台北車站 ~ A22 老街溪站），全線通行，適合前往沿線區域站點。</li>
+        <li><strong>直達車 (Express)</strong>：僅停靠核心樞紐大站（如 A1 台北車站、A3 新北產業園區、A8 長庚醫院、A12 第一航廈、A13 第二航廈、A18 高鐵桃園站、A21 環北站），節省通勤與前往桃園國際機場的時間。</li>
+      </ul>
+
+      <h3>2. 普通車先來，要不要先上車？</h3>
+      <p>在月台等車時，若前往目的站距離較遠且「普通車」先進站，您可以透過「機捷快選」即時計算：直接搭乘普通車，或是先上普通車到 A8 長庚醫院站轉乘後方直達車是否會更快抵達。工具將自動為您給出精緻明確的搭車決策與總耗時比對。</p>
+
+      <h3>3. 時刻表精算與單程票價</h3>
+      <p>支援起終點即時查詢、出發發車倒數標示、單程全票票價（NT$ 30 ~ 160）試算，以及智慧同月台轉乘與桃園機場免費區段提示。</p>
+    </section>
 
     <footer>
       <p id="versionText">載入中...</p>
@@ -110,5 +191,4 @@
     });
   </script>
 </body>
-
 </html>

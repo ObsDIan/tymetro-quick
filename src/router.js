@@ -237,9 +237,9 @@ function makeRoute(type, legs, context) {
 function routeTypeLabel(type) {
   return {
     local: '全程普通車',
-    express: '全程直達/跳站車',
-    local_to_express: '普通車 → 直達/跳站車',
-    express_to_local: '直達/跳站車 → 普通車',
+    express: '全程直達車',
+    local_to_express: '普通車 → 直達車',
+    express_to_local: '直達車 → 普通車',
   }[type] ?? type;
 }
 

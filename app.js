@@ -134,7 +134,7 @@ function renderDecision(result, firstDeparture) {
     } else if (firstDeparture.trainType === 'express') {
       answer = sameFirstTrain ? '直達車先來：上車' : '直達車先來：再確認';
       detail = sameFirstTrain
-        ? `最快方案就是先搭這班直達/跳站車。${formatMinutes(best.arrival)} 抵達。`
+        ? `最快方案就是先搭這班直達車。${formatMinutes(best.arrival)} 抵達。`
         : `最快方案不是第一班車，而是 ${formatMinutes(best.departure)} 的 ${formatTrainType(best.legs[0].trainType)}。`;
     }
   }
@@ -198,7 +198,7 @@ function renderTimeline(route) {
   route.legs.forEach((leg, idx) => {
     const isExpress = leg.trainType === 'express';
     const tagClass = isExpress ? 'express' : 'local';
-    const tagLabel = isExpress ? '直達/跳站車' : '普通車';
+    const tagLabel = isExpress ? '直達車' : '普通車';
 
     parts.push(`
       <div class="step">
@@ -227,7 +227,7 @@ function renderTimeline(route) {
 
 
 function formatTrainType(type) {
-  return type === 'local' ? '普通車' : type === 'express' ? '直達/跳站車' : type;
+  return type === 'local' ? '普通車' : type === 'express' ? '直達車' : type;
 }
 
 function escapeHtml(value) {

@@ -606,6 +606,41 @@ select:focus, input:focus {
   font-weight: 600;
 }
 
+/* SEO Info Card */
+.seo-info-card {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.35rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--border);
+}
+.seo-info-card h2 {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.seo-info-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin: 0.9rem 0 0.35rem;
+}
+.seo-info-card p, .seo-info-card ul {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 0.5rem;
+}
+.seo-info-card ul {
+  padding-left: 1.25rem;
+}
+.seo-info-card li {
+  margin-bottom: 0.35rem;
+}
+
 footer {
   margin: 2rem 0 1rem;
   color: var(--text-muted);
