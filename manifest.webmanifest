@@ -1,0 +1,19 @@
+{
+  "name": "機捷快選",
+  "short_name": "機捷快選",
+  "description": "桃園機場捷運普通車、直達車與一次轉乘最快搭法判斷工具",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f8fb",
+  "theme_color": "#174ea6",
+  "lang": "zh-Hant-TW",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

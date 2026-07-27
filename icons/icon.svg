@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="機捷快選">
+  <rect width="512" height="512" rx="112" fill="#174ea6"/>
+  <path d="M128 144c0-35 28-64 64-64h128c35 0 64 29 64 64v144c0 31-22 57-52 63l44 57h-54l-32-48h-68l-32 48h-54l44-57c-30-6-52-32-52-63V144z" fill="#fff"/>
+  <path d="M176 160h160v88H176z" fill="#cfe1ff"/>
+  <circle cx="196" cy="304" r="24" fill="#174ea6"/>
+  <circle cx="316" cy="304" r="24" fill="#174ea6"/>
+</svg>

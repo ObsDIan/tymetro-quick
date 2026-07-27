@@ -1,0 +1,19 @@
+機捷快選資料轉換報告
+
+來源檔：StationTimeTable.xml
+來源 SrcUpdateTime：2018-05-15T00:00:00+08:00
+來源 UpdateTime：2018-05-16T11:30:00+08:00
+
+轉換與升級結果：
+- Stations: 22 (A1 ~ A22)
+- Timetable rows: 4430
+- Train runs: 428
+- Services: daily, weekday, weekend
+- Directions: north, south
+- Train types: express, local
+
+說明：
+- 目前已完整涵蓋 A1～A22 站點路徑與票價資訊。
+- 原始 XML 是站別時刻表，沒有真正 TripID / TrainNo；轉換器已用服務日、方向、目的站、車種與時間順序重建 train_id。
+- 終點站到站時間由相鄰區間中位數補上，供 A1 / A13 / A21 / A22 等終點站查詢使用。
+

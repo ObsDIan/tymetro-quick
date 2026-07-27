@@ -1,0 +1,10 @@
+{
+  "name": "tymetro-quick",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/router.test.mjs",
+    "validate:data": "python tools/validate_data.py data/stations.csv data/timetable.csv"
+  }
+}

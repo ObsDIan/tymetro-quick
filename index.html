@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#174ea6">
+  <meta name="description" content="桃園機場捷運普通車與直達車最快轉乘判斷工具">
+  <title>機捷快選</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div class="hero-brand">
+        <span class="eyebrow"><span class="pulse-dot"></span> Taoyuan Airport MRT</span>
+        <h1>機捷快選</h1>
+        <p class="subtitle">普通車先來，要不要上？幫你精算最快到達搭法。</p>
+      </div>
+      <button id="installBtn" class="ghost hidden" type="button">⚡ 安裝 App</button>
+    </header>
+
+    <section id="dataBanner" class="banner hidden" aria-live="polite"></section>
+
+    <section class="card query-card" aria-labelledby="queryTitle">
+      <div class="card-title-row">
+        <h2 id="queryTitle">快速路線查詢</h2>
+        <button id="swapBtn" class="icon-btn" type="button" aria-label="交換出發站與目的站" title="交換起終點">⇄</button>
+      </div>
+
+      <div class="station-chips-row">
+        <span class="chips-label">熱門起點:</span>
+        <div class="chips-container" id="originChips">
+          <button class="chip" data-origin="A1">台北車站</button>
+          <button class="chip" data-origin="A8">長庚醫院</button>
+          <button class="chip" data-origin="A12">一航廈</button>
+          <button class="chip" data-origin="A13">二航廈</button>
+          <button class="chip" data-origin="A18">高鐵桃園</button>
+        </div>
+      </div>
+
+      <label for="originSelect">我在（出發站）</label>
+      <div class="select-wrapper">
+        <select id="originSelect"></select>
+      </div>
+
+      <label for="destinationSelect">我要去（目的站）</label>
+      <div class="select-wrapper">
+        <select id="destinationSelect"></select>
+      </div>
+
+      <div class="time-row">
+        <label for="timeInput">出發時間</label>
+        <button id="nowBtn" class="tiny primary-tiny" type="button">⏱️ 現在</button>
+      </div>
+      <input id="timeInput" type="time" step="60">
+
+      <details class="advanced">
+        <summary>📅 進階設定（乘車日期與備註）</summary>
+        <label for="dateInput">日期</label>
+        <input id="dateInput" type="date">
+        <p class="hint">系統自動按日期判斷平日/週末班表；國定假日依官方公告為準。</p>
+      </details>
+
+      <button id="searchBtn" class="primary search-btn-animated" type="button">
+        <span>幫我算最快搭法</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+
+      <div class="quick-actions">
+        <button id="workBtn" type="button">🏢 上班路線</button>
+        <button id="homeBtn" type="button">🏠 下班路線</button>
+      </div>
+      <div class="quick-actions secondary-actions">
+        <button id="saveWorkBtn" type="button">⭐ 存為上班</button>
+        <button id="saveHomeBtn" type="button">⭐ 存為下班</button>
+      </div>
+    </section>
+
+    <section id="decision" class="decision hidden" aria-live="polite"></section>
+    <section id="results" class="results" aria-live="polite"></section>
+
+
+    <footer>
+      <p id="versionText">載入中...</p>
+      <p>實際營運、臨時調整與誤點仍以桃園捷運官方公告與現場資訊為準。</p>
+    </footer>
+  </main>
+
+  <script src="data/bundle.js"></script>
+  <script type="module" src="app.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const vText = document.getElementById('versionText');
+        const banner = document.getElementById('dataBanner');
+        if (vText && vText.textContent === '載入中...') {
+          vText.textContent = '無法自動載入模組 (file:// CORS 限制)';
+          if (banner) {
+            banner.innerHTML = '<strong>⚠️ 提示：目前正以本機檔案 (file://) 模式開啟</strong><br>瀏覽器安全性規範預設限制 JavaScript Module 開啟。<br>👉 請啟動本機伺服器：在目錄執行 <code>python -m http.server 8080</code> 後開啟 <a href="http://localhost:8080" target="_blank">http://localhost:8080</a>；或發布至 GitHub Pages。';
+            banner.classList.remove('hidden', 'banner');
+            banner.classList.add('banner', 'error');
+          }
+        }
+      }, 1200);
+    });
+  </script>
+</body>
+
+</html>

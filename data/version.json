@@ -1,0 +1,12 @@
+{
+  "app_version": "0.1.1",
+  "data_version": "StationTimeTable.xml-2018-05-15",
+  "updated_at": "2026-07-27",
+  "valid_until": null,
+  "is_demo": false,
+  "source": "桃園捷運官方站別時刻表（包含 A1-A22 完整路線）",
+  "source_update_time": "2018-05-15T00:00:00+08:00",
+  "xml_update_time": "2018-05-16T11:30:00+08:00",
+  "note": "此版本已擴充 A1-A22 站點支援。正式通勤請配合桃捷最新發布之實體班表使用。"
+}
+
