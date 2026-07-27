@@ -1,7 +1,7 @@
 # 機捷快選 - 專案進度與狀態 (STATUS.md)
 
 最後更新日期：2026-07-27  
-目前版本：`v0.1.1` (支援 A1~A22 全線站點)
+目前版本：`v0.1.1` (支援 A1~A22 全線站點 + SEO 完全優化)
 
 ---
 
@@ -26,7 +26,15 @@
 ### ✅ 第四階段：自動化測試與發布準備
 - [x] 測試腳本：建立 [tools/test_router.py](tools/test_router.py) 與 [tools/validate_data.py](tools/validate_data.py) 通過 100% 測試。
 - [x] 本機 Web 伺服器腳本：新增 [run_server.bat](run_server.bat) 方便雙擊開啟。
-- [x] GitHub Pages 相容：完全使用相對路徑，相容 GitHub Pages (`github.io`)。
+- [x] GitHub Pages 相容：完全使用相對路徑與相容設定，部署於 `https://obsdian.github.io/tymetro-quick/`。
+
+### ✅ 第五階段：SEO 搜尋引擎最佳化與 Google 站長驗證
+- [x] 車種專用名詞統一：全站與說明文件統一為「普通車」與「直達車」兩種，移除非標準名稱（跳站車）。
+- [x] SEO 元資料強化：完成 Open Graph (Facebook/Line)、Twitter Cards 與 Canonical URLs 標準網址設定。
+- [x] Google Search Console 驗證：在 [index.html](index.html) 配置 `<meta name="google-site-verification" content="Pb7y1RagN7gtxO5tG8lEg1lOkCJnfWqFOKokPPE2CXw" />`。
+- [x] Schema.org 結構化數據：導入 `WebApplication` 與 `FAQPage` JSON-LD，提高搜尋引擎 Rich Snippets 曝光率。
+- [x] Sitemap & Robots 部署：建立根目錄 [sitemap.xml](sitemap.xml) 與 [robots.txt](robots.txt)。
+- [x] 語意化乘車指南卡片：在 [index.html](index.html) 新增 SEO 指南區塊與配對 CSS 卡片樣式。
 
 ---
 
@@ -34,15 +42,19 @@
 
 ```text
 tymetro-quick/
-├── index.html              # 主介面 HTML
-├── styles.css              # 主樣式檔 (Modern Design System)
-├── app.js                  # 前端互動邏輯與 PWA 註冊
+├── index.html              # 主介面 HTML (含 GSC 驗證、SEO JSON-LD & 乘車指南)
+├── styles.css              # 主樣式檔 (Modern Design System + SEO 卡片樣式)
+├── app.js                  # 前端互動邏輯、發車倒數與 PWA 註冊
 ├── manifest.webmanifest    # PWA 安裝設定檔
 ├── service-worker.js       # PWA 離線快取控制檔
+├── robots.txt              # 搜尋引擎爬蟲設定檔
+├── sitemap.xml             # 網站導覽 Sitemap 檔
+├── googlebb1681d98eb884b5.html # Google Search Console 檔案驗證檔
 ├── run_server.bat          # Windows 一鍵啟動本機伺服器腳本
 ├── STATUS.md               # 專案進度與狀態 (本檔案)
 ├── DATA_UPDATE.md          # 班表資料更新操作指南
 ├── AI_HANDOVER.md          # AI 接手維護與開發說明文件
+├── README.md               # 專案說明文件
 ├── src/
 │   ├── csv.js              # CSV 解析與 fetch/fallback 讀取器
 │   └── router.js           # 轉乘演算法、票價計算與路徑規劃引擎

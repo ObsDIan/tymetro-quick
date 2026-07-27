@@ -8,6 +8,7 @@
 
 - **專案名稱**：機捷快選 (Taoyuan Airport MRT Quick Router)
 - **定位**：手機 Mobile-first PWA 靜態網頁，無需後端，專為解答「普通車先來，要不要上？」的轉乘決策工具。
+- **發布網址**：`https://obsdian.github.io/tymetro-quick/`
 - **技術棧**：原生 HTML5 / Vanilla CSS (現代 HSL 系統 + 毛玻璃 Glassmorphism) / Vanilla JavaScript (ES Modules + `window.TYMETRO_STATIC_DATA` Fallback)。
 - **部署平台**：GitHub Pages (`github.io`) / 本機靜態 Web Server (`http://localhost:8080`)。
 
@@ -25,11 +26,18 @@
   - `file://` 或 fetch 失敗時：在 [src/csv.js](src/csv.js) 自動回退至 `window.TYMETRO_STATIC_DATA`。
 - **重要**：每當修改或更新 `data/stations.csv` 或 `data/timetable.csv` 後，必須執行 `python tools/build_bundle.py` 重新產生 `bundle.js`。
 
-### 3. 核心演算法維護 ([src/router.js](src/router.js))
+### 3. 核心演算法與車種規範
+- **車種統一**：桃園機場捷運僅有兩種車種 —— **普通車 (`local`)** 與 **直達車 (`express`)**。禁止在 UI 或文件中使用「跳站車」等非標準用語。
 - `TRANSFER_BUFFER_MINUTES = 1`：同站/同月台轉乘的基本最小等待時間緩衝。
 - `AFTER_MIDNIGHT_CUTOFF = 4 * 60`：跨夜營業日時間標準化（00:xx ~ 03:xx 自動換算為 `+1440` 分鐘）。
 - `planRoutes()`：綜合直達車與最多一次轉乘（普通轉直達、直達轉普通）方案，排序權重：**最早抵達 > 最少轉乘 > 最早出發 > 總花費時間**。
 - `calculateFare()`：單程全票估算（全線起步價 NT$ 30，最高上限 NT$ 160）。
+
+### 4. SEO & 站長工具規範
+- [sitemap.xml](sitemap.xml) 與 [robots.txt](robots.txt) 均位在專案根目錄，指向主網址 `https://obsdian.github.io/tymetro-quick/`。
+- [index.html](index.html) 已配置 Google Search Console 驗證碼：
+  `<meta name="google-site-verification" content="Pb7y1RagN7gtxO5tG8lEg1lOkCJnfWqFOKokPPE2CXw" />`
+- 包含 JSON-LD Schema.org (`WebApplication` & `FAQPage`)、Open Graph 與 Twitter Card 標籤。
 
 ---
 
@@ -57,3 +65,4 @@ python tools/build_bundle.py
 1. **若為更新資料/站點** ➔ 參考 [DATA_UPDATE.md](DATA_UPDATE.md)。
 2. **若為修改 UI 視覺/樣式** ➔ 修改 [styles.css](styles.css) 與 [index.html](index.html)，維持質感 HSL 色彩與響應式排版。
 3. **若為調整轉乘邏輯/票價** ➔ 修改 [src/router.js](src/router.js) 並跑通 `python tools/test_router.py`。
+4. **若為調整 SEO / 站長設定** ➔ 修改 [index.html](index.html) head 標籤、[sitemap.xml](sitemap.xml) 與 [robots.txt](robots.txt)。
