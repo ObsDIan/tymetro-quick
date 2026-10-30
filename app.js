@@ -31,6 +31,7 @@ const els = {
 let context = null;
 let version = null;
 let deferredInstallPrompt = null;
+const DATA_MAX_AGE_DAYS = 180;
 
 function todayString(date = new Date()) {
   const y = date.getFullYear();
@@ -271,12 +272,29 @@ async function init() {
     populateStationSelects();
     renderVersion(metadata, timetable.length);
     if (metadata.is_demo) {
-      showBanner('目前載入的是示範班表，不可作為實際通勤依據。請先用官方資料轉換並替換 data/timetable.csv。');
+      showBanner('目前載入的是示範班表，不可作為實際通勤依據。請先用官方資料轉換並替換 data/timetable.csv。', { error: true });
+    } else {
+      renderDataFreshness(metadata);
     }
     search();
   } catch (error) {
     showBanner(error.message, { error: true });
     els.versionText.textContent = '資料載入失敗';
+  }
+}
+
+function renderDataFreshness(metadata) {
+  if (!metadata.source_update_time) return;
+
+  const sourceDate = new Date(metadata.source_update_time);
+  if (Number.isNaN(sourceDate.getTime())) return;
+
+  const ageDays = Math.floor((Date.now() - sourceDate.getTime()) / 86_400_000);
+  if (ageDays > DATA_MAX_AGE_DAYS) {
+    showBanner(
+      `⚠️ 班表來源日期為 ${metadata.source_update_time.slice(0, 10)}，可能已過期。請以桃園捷運官方公告與現場資訊為準。`,
+      { error: true },
+    );
   }
 }
 
@@ -331,8 +349,20 @@ els.install.addEventListener('click', async () => {
 });
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js').catch(() => undefined);
+  window.addEventListener('load', async () => {
+    try {
+      const registration = await navigator.serviceWorker.register('service-worker.js');
+      setInterval(() => registration.update(), 60 * 60 * 1000);
+    } catch {
+      // The app remains usable online when service worker registration fails.
+    }
+  });
+
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshing) return;
+    refreshing = true;
+    window.location.reload();
   });
 }
 
