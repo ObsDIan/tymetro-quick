@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tymetro-quick-v0.1.1';
+const CACHE_NAME = 'tymetro-quick-v0.1.2';
 const APP_SHELL = [
   './',
   './index.html',
@@ -7,6 +7,9 @@ const APP_SHELL = [
   './src/csv.js',
   './src/router.js',
   './data/bundle.js',
+  './data/stations.csv',
+  './data/timetable.csv',
+  './data/version.json',
   './manifest.webmanifest',
   './icons/icon.svg'
 ];
@@ -41,7 +44,7 @@ async function cacheFirst(request) {
   if (cached) return cached;
   const response = await fetch(request);
   const cache = await caches.open(CACHE_NAME);
-  cache.put(request, response.clone());
+  if (response.ok) cache.put(request, response.clone());
   return response;
 }
 
@@ -49,7 +52,7 @@ async function networkFirst(request) {
   const cache = await caches.open(CACHE_NAME);
   try {
     const response = await fetch(request);
-    cache.put(request, response.clone());
+    if (response.ok) cache.put(request, response.clone());
     return response;
   } catch (error) {
     const cached = await caches.match(request);

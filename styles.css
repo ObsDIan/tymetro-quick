@@ -649,6 +649,7 @@ footer {
   line-height: 1.5;
 }
 footer p { margin-bottom: 0.35rem; }
+footer a { color: var(--primary); font-weight: 700; }
 
 .hidden { display: none !important; }
 

@@ -1,5 +1,10 @@
 # 🚆 機捷快選 (Taoyuan Airport MRT Quick Router)
 
+[![CI](https://github.com/ObsDIan/tymetro-quick/actions/workflows/ci.yml/badge.svg)](https://github.com/ObsDIan/tymetro-quick/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/線上使用-GitHub%20Pages-4f46e5)](https://obsdian.github.io/tymetro-quick/)
+
+## [立即使用機捷快選](https://obsdian.github.io/tymetro-quick/)
+
 **手機上快速判斷桃園機場捷運「普通車先來要不要搭？」、「直達車何時轉乘最快」的極速 PWA 工具。**
 
 > 📱 支援手機 RWD 響應式排版、離線 PWA 加入主畫面、SEO 搜尋引擎最佳化與全線 A1 ~ A22 站點票價與時刻精算。
@@ -127,16 +132,16 @@ python tools/test_router.py
 
 ---
 
-## 🌐 部署至 GitHub Pages
+## 🌐 線上版本
 
-1. 將本專案推送到 GitHub Repository 的 `main` 分支。
-2. 進入 Repository 的 **Settings** → **Pages**。
-3. Source 選擇 `Deploy from a branch`。
-4. Branch 選擇 `main` / Folder 選擇 `/ (root)` 並儲存。
-5. 部署完成後即可在手機瀏覽器開啟並點選「新增至主畫面」安裝為桌面 PWA 應用程式。
+正式網站已部署於 [https://obsdian.github.io/tymetro-quick/](https://obsdian.github.io/tymetro-quick/)。
+
+網站由 GitHub Pages 提供，使用者可在支援 PWA 的瀏覽器中加入主畫面。每次更新班表時，請同步更新 `data/version.json`，並執行完整測試與資料驗證。
 
 ---
 
 ## 📄 授權與聲明
 
+- 本工具使用靜態班表資料，頁面會顯示資料來源日期；若資料超過 180 天未更新，系統會主動警示。
 - 本工具僅供乘車規劃參考，實際發車時間、臨時調度、誤點或特殊節假日營運調整，仍以 **桃園大眾捷運股份有限公司** 官方現場公告為準。
+- 問題與資料錯誤可透過 [GitHub Issues](https://github.com/ObsDIan/tymetro-quick/issues) 回報。
